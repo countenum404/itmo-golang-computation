@@ -1,9 +1,9 @@
 package main
 
 import (
-	"countenum404/itmo-golang-computation/intenal/app"
-	"countenum404/itmo-golang-computation/intenal/handlers"
-	"countenum404/itmo-golang-computation/intenal/service"
+	"countenum404/itmo-golang-computation/internal/app"
+	"countenum404/itmo-golang-computation/internal/handlers"
+	"countenum404/itmo-golang-computation/internal/service"
 	"net/http"
 
 	"go.uber.org/fx"

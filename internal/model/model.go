@@ -1,11 +1,11 @@
 package model
 
-type Result struct {
+type SolutionResponse struct {
 	Items []*PrintResult
 }
 
-func NewResult() *Result {
-	return &Result{Items: make([]*PrintResult, 0)}
+func NewResult() *SolutionResponse {
+	return &SolutionResponse{Items: make([]*PrintResult, 0)}
 }
 
 type PrintResult struct {
@@ -25,6 +25,6 @@ type Operation struct {
 	Right string `json:"right"`
 }
 
-type Request struct {
+type CalcRequest struct {
 	Operations []Operation `json:"operations"`
 }

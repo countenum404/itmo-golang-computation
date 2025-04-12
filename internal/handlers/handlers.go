@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"countenum404/itmo-golang-computation/intenal/model"
-	"countenum404/itmo-golang-computation/intenal/service"
+	"countenum404/itmo-golang-computation/internal/model"
+	"countenum404/itmo-golang-computation/internal/service"
 	"net/http"
 
 	"go.uber.org/fx"
@@ -24,7 +24,7 @@ func NewSolverHandlers(lc fx.Lifecycle, solverService service.SolverService) *So
 
 func (s *SolverHandlers) HandleCalc() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		o := &model.Request{}
+		o := &model.CalcRequest{}
 		ReadJson(r, o)
 
 		resultModel, _ := s.SolverService.Solve(o)

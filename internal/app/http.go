@@ -2,26 +2,12 @@ package app
 
 import (
 	"context"
-	"countenum404/itmo-golang-computation/intenal/handlers"
-	"log"
-	"net/http"
-
+	"countenum404/itmo-golang-computation/internal/handlers"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
+	"log"
+	"net/http"
 )
-
-var Module = fx.Module("server",
-	fx.Provide(zap.NewExample),
-	fx.Invoke(NewHttpServer),
-)
-
-type Config struct {
-	Message string
-}
-
-type Server interface {
-	Start()
-}
 
 type HttpServer struct {
 	Handlers   handlers.Handlers

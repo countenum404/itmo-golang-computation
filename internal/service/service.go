@@ -1,8 +1,8 @@
 package service
 
 import (
-	"countenum404/itmo-golang-computation/intenal/core"
-	"countenum404/itmo-golang-computation/intenal/model"
+	"countenum404/itmo-golang-computation/internal/core"
+	"countenum404/itmo-golang-computation/internal/model"
 	"go.uber.org/zap"
 
 	"go.uber.org/fx"
@@ -14,7 +14,7 @@ var Module = fx.Module("service",
 )
 
 type SolverService interface {
-	Solve(req *model.Request) (*model.Result, error)
+	Solve(req *model.CalcRequest) (*model.SolutionResponse, error)
 }
 
 type BaseSolverService struct {
@@ -26,7 +26,7 @@ func NewSolverService() BaseSolverService {
 	return BaseSolverService{}
 }
 
-func (b BaseSolverService) Solve(req *model.Request) (*model.Result, error) {
+func (b BaseSolverService) Solve(req *model.CalcRequest) (*model.SolutionResponse, error) {
 	stack := convertRequestToStack(req)
 
 	b.Solver = core.NewBasicSolver(stack)
@@ -46,7 +46,7 @@ func (b BaseSolverService) Solve(req *model.Request) (*model.Result, error) {
 	return result, nil
 }
 
-func convertRequestToStack(req *model.Request) *core.Stack[core.Command] {
+func convertRequestToStack(req *model.CalcRequest) *core.Stack[core.Command] {
 
 	stack := core.NewStack[core.Command]()
 
