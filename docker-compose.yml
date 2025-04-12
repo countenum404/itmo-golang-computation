@@ -1,0 +1,8 @@
+name: itmo-golang-computation-2025
+
+services:
+  app:
+    container_name: app
+    build: .
+    ports:
+      - 8080:8080
