@@ -3,9 +3,8 @@ package service
 import (
 	"countenum404/itmo-golang-computation/internal/core"
 	"countenum404/itmo-golang-computation/internal/model"
-	"go.uber.org/zap"
-
 	"go.uber.org/fx"
+	"go.uber.org/zap"
 )
 
 var Module = fx.Module("service",
@@ -42,7 +41,6 @@ func (b BaseSolverService) Solve(req *model.CalcRequest) (*model.SolutionRespons
 		va := v.Items["value"].(string)
 		result.Items = append(result.Items, model.NewPrintResult(vr, va))
 	}
-
 	return result, nil
 }
 

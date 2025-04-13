@@ -24,7 +24,7 @@ func NewSolverHandlers(lc fx.Lifecycle, solverService service.SolverService) *So
 
 func (s *SolverHandlers) HandleCalc() func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		o := &model.CalcRequest{}
+		o := new(model.CalcRequest)
 		ReadJson(r, o)
 
 		resultModel, _ := s.SolverService.Solve(o)

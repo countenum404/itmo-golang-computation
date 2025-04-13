@@ -5,7 +5,6 @@ import (
 	"countenum404/itmo-golang-computation/internal/handlers"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
-	"log"
 	"net/http"
 )
 
@@ -17,8 +16,8 @@ type HttpServer struct {
 	Message    string
 }
 
-func (s *HttpServer) Start() {
-	log.Fatal(s.HttpServer.ListenAndServe())
+func (s *HttpServer) Start() error {
+	return s.HttpServer.ListenAndServe()
 }
 
 func (s *HttpServer) RegisterHandlers() {
@@ -37,12 +36,17 @@ func NewHttpServer(lc fx.Lifecycle, httpServer *http.Server, logger *zap.Logger,
 	s.RegisterHandlers()
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
-			go s.Start()
-			s.Logger.Log(zap.InfoLevel, "Server started")
+			go func() {
+				err := s.Start()
+				if err != nil {
+					s.Logger.Fatal("Failed to start server", zap.Error(err))
+				}
+			}()
+			s.Logger.Info("HTTP Server started")
 			return nil
 		},
 		OnStop: func(ctx context.Context) error {
-			s.Logger.Log(zap.InfoLevel, "Server stopped")
+			s.Logger.Info("HTTP Server stopped")
 			return nil
 		},
 	})

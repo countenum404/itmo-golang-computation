@@ -7,7 +7,7 @@ import (
 
 var Module = fx.Module("server",
 	fx.Provide(zap.NewExample),
-	fx.Invoke(NewHttpServer),
+	fx.Invoke(NewGrpcServer),
 )
 
 type Config struct {
@@ -15,5 +15,5 @@ type Config struct {
 }
 
 type Server interface {
-	Start()
+	Start() error
 }

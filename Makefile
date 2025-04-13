@@ -11,4 +11,8 @@ up:
 	docker-compose up
 
 clean:
+	rm -rf pkg/app
 	docker compose rm -f -s && docker rmi $(NAME)
+
+protoc:
+	protoc --go_out=. --go-grpc_out=. proto/calculation.proto

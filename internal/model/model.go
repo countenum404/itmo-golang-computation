@@ -1,5 +1,7 @@
 package model
 
+import "countenum404/itmo-golang-computation/pkg/app"
+
 type SolutionResponse struct {
 	Items []*PrintResult
 }
@@ -18,6 +20,7 @@ func NewPrintResult(variable string, value string) *PrintResult {
 }
 
 type Operation struct {
+	*app.Operation
 	Type  string `json:"type"`
 	Op    string `json:"op,omitempty"`
 	Var   string `json:"var"`
@@ -26,5 +29,6 @@ type Operation struct {
 }
 
 type CalcRequest struct {
-	Operations []Operation `json:"operations"`
+	*app.CalcRequest
+	Operations []*Operation `json:"operations"`
 }
