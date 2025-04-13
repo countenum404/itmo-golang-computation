@@ -5,7 +5,6 @@ import (
 	"countenum404/itmo-golang-computation/internal/model"
 	"countenum404/itmo-golang-computation/internal/service"
 	"countenum404/itmo-golang-computation/pkg/app"
-	"go.uber.org/fx"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 	"net"
@@ -19,25 +18,9 @@ type GrpcServer struct {
 	Server        *grpc.Server
 }
 
-func NewGrpcServer(lc fx.Lifecycle, logger *zap.Logger, solverService service.SolverService) *GrpcServer {
+func NewGrpcServer(logger *zap.Logger, solverService service.SolverService) *GrpcServer {
 	grpcServer := grpc.NewServer()
 	s := &GrpcServer{Server: grpcServer, Logger: logger, SolverService: solverService}
-	lc.Append(fx.Hook{
-		OnStart: func(ctx context.Context) error {
-			go func() {
-				err := s.Start()
-				if err != nil {
-					s.Logger.Fatal("Failed to start server", zap.Error(err))
-				}
-			}()
-			s.Logger.Info("GRPC server started")
-			return nil
-		},
-		OnStop: func(ctx context.Context) error {
-			s.Logger.Info("GRPC server stopped")
-			return nil
-		},
-	})
 	return s
 }
 

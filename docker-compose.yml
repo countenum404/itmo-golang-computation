@@ -1,8 +1,17 @@
 name: itmo-golang-computation-2025
 
 services:
-  app:
-    container_name: app
+  http:
+    container_name: app-http
     build: .
+    environment:
+      SERVER_TYPE: http
     ports:
       - 8080:8080
+  grpc:
+    container_name: app-grpc
+    build: .
+    environment:
+      SERVER_TYPE: grpc
+    ports:
+      - 50051:8080
