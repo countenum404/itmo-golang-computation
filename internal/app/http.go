@@ -26,7 +26,7 @@ func (s *HttpServer) RegisterHandlers() {
 		w.Write([]byte("Send a POST request to process your query"))
 	})
 
-	s.ServeMux.HandleFunc("/swagger", httpSwagger.WrapHandler)
+	s.ServeMux.Handle("/swagger/", httpSwagger.WrapHandler)
 
 	s.ServeMux.HandleFunc("/", http.NotFound)
 }

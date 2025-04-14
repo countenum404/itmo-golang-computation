@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/calculate": {
+        "/": {
             "post": {
                 "description": "This endpoint takes a calculation request and returns the result of the calculation.",
                 "consumes": [
@@ -27,7 +27,6 @@ const docTemplate = `{
                 "tags": [
                     "calculation"
                 ],
-                "summary": "Calculate result based on input parameters",
                 "parameters": [
                     {
                         "description": "Calculation request",
@@ -51,26 +50,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "app.Operation": {
-            "type": "object",
-            "properties": {
-                "left": {
-                    "type": "string"
-                },
-                "op": {
-                    "type": "string"
-                },
-                "right": {
-                    "type": "string"
-                },
-                "type": {
-                    "type": "string"
-                },
-                "var": {
-                    "type": "string"
-                }
-            }
-        },
         "model.CalcRequest": {
             "type": "object",
             "properties": {
