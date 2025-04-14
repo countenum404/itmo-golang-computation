@@ -1,0 +1,75 @@
+definitions:
+  app.Operation:
+    properties:
+      left:
+        type: string
+      op:
+        type: string
+      right:
+        type: string
+      type:
+        type: string
+      var:
+        type: string
+    type: object
+  model.CalcRequest:
+    properties:
+      operations:
+        items:
+          $ref: '#/definitions/model.Operation'
+        type: array
+    type: object
+  model.Operation:
+    properties:
+      left:
+        type: string
+      op:
+        type: string
+      right:
+        type: string
+      type:
+        type: string
+      var:
+        type: string
+    type: object
+  model.PrintResult:
+    properties:
+      value:
+        type: string
+      var:
+        type: string
+    type: object
+  model.SolutionResponse:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/model.PrintResult'
+        type: array
+    type: object
+info:
+  contact: {}
+paths:
+  /calculate:
+    post:
+      consumes:
+      - application/json
+      description: This endpoint takes a calculation request and returns the result
+        of the calculation.
+      parameters:
+      - description: Calculation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.CalcRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successful calculation result
+          schema:
+            $ref: '#/definitions/model.SolutionResponse'
+      summary: Calculate result based on input parameters
+      tags:
+      - calculation
+swagger: "2.0"

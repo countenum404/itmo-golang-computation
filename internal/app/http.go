@@ -2,6 +2,8 @@ package app
 
 import (
 	"countenum404/itmo-golang-computation/internal/handlers"
+	_ "countenum404/itmo-golang-computation/internal/handlers/docs"
+	httpSwagger "github.com/swaggo/http-swagger"
 	"go.uber.org/zap"
 	"net/http"
 )
@@ -23,6 +25,8 @@ func (s *HttpServer) RegisterHandlers() {
 	s.ServeMux.HandleFunc("GET /{$}", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Send a POST request to process your query"))
 	})
+
+	s.ServeMux.HandleFunc("/swagger", httpSwagger.WrapHandler)
 
 	s.ServeMux.HandleFunc("/", http.NotFound)
 }
