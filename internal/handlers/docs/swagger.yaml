@@ -1,17 +1,4 @@
 definitions:
-  app.Operation:
-    properties:
-      left:
-        type: string
-      op:
-        type: string
-      right:
-        type: string
-      type:
-        type: string
-      var:
-        type: string
-    type: object
   model.CalcRequest:
     properties:
       operations:
@@ -49,7 +36,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /calculate:
+  /:
     post:
       consumes:
       - application/json
@@ -69,7 +56,6 @@ paths:
           description: Successful calculation result
           schema:
             $ref: '#/definitions/model.SolutionResponse'
-      summary: Calculate result based on input parameters
       tags:
       - calculation
 swagger: "2.0"
