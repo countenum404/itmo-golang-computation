@@ -25,7 +25,7 @@ func NewGrpcServer(logger *zap.Logger, solverService service.SolverService) *Grp
 }
 
 func (g *GrpcServer) Start() error {
-	lis, err := net.Listen("tcp", ":8080")
+	lis, err := net.Listen("tcp", ":50051")
 	if err != nil {
 		return err
 	}

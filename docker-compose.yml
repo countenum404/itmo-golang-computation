@@ -6,12 +6,21 @@ services:
     build: .
     environment:
       SERVER_TYPE: http
-    ports:
-      - 8080:8080
+
   grpc:
     container_name: app-grpc
     build: .
     environment:
       SERVER_TYPE: grpc
     ports:
-      - 50051:8080
+      - "50051:50051"
+
+  nginx:
+    container_name: app-nginx
+    image: nginx:1.27.4
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "8080:8080"
+    depends_on:
+      - http

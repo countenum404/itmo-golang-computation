@@ -13,6 +13,9 @@ WORKDIR /opt/backend-service
 
 COPY --from=build /home/build/app app
 
+# if SERVER_TYPE is http
 EXPOSE 8080
+# if SERVER_TYPE is grpc
+EXPOSE 50051
 
 CMD [ "./app" ]
