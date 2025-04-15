@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
+	"google.golang.org/grpc"
 	"net/http"
 	"os"
 )
@@ -16,6 +17,12 @@ var Module = fx.Module("server",
 	fx.Provide(func(cfg *Config) *http.Server {
 		if cfg.ServerType == ServerTypeHTTP {
 			return &http.Server{}
+		}
+		return nil
+	}),
+	fx.Provide(func(cfg *Config) *grpc.Server {
+		if cfg.ServerType == ServerTypeGRPC {
+			return grpc.NewServer()
 		}
 		return nil
 	}),
@@ -42,9 +49,9 @@ type Server interface {
 	Start() error
 }
 
-func NewServer(httpServer *http.Server, logger *zap.Logger, cfg *Config, handlers handlers.Handlers, solverService service.SolverService) Server {
+func NewServer(httpServer *http.Server, grpcServer *grpc.Server, logger *zap.Logger, cfg *Config, handlers handlers.Handlers, solverService service.SolverService) Server {
 	if cfg.ServerType == "grpc" {
-		return NewGrpcServer(logger, solverService)
+		return NewGrpcServer(grpcServer, logger, solverService)
 	}
 	return NewHttpServer(httpServer, logger, handlers)
 }

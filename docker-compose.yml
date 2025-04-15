@@ -23,3 +23,4 @@ services:
       - "50051:50051"
     depends_on:
       - http
+      - grpc

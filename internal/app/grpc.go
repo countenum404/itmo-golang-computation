@@ -18,10 +18,8 @@ type GrpcServer struct {
 	Server        *grpc.Server
 }
 
-func NewGrpcServer(logger *zap.Logger, solverService service.SolverService) *GrpcServer {
-	grpcServer := grpc.NewServer()
-	s := &GrpcServer{Server: grpcServer, Logger: logger, SolverService: solverService}
-	return s
+func NewGrpcServer(server *grpc.Server, logger *zap.Logger, solverService service.SolverService) *GrpcServer {
+	return &GrpcServer{Server: server, Logger: logger, SolverService: solverService}
 }
 
 func (g *GrpcServer) Start() error {
