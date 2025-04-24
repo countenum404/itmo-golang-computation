@@ -1,12 +1,16 @@
 package core
 
-import "errors"
+import (
+	"errors"
+	"sync"
+)
 
 /*
 Stack data structure implementation
 */
 type Stack[T any] struct {
 	slice []T
+	mtx   sync.RWMutex
 }
 
 func NewStack[T any]() *Stack[T] {
@@ -16,6 +20,12 @@ func NewStack[T any]() *Stack[T] {
 
 func (s *Stack[T]) Push(el T) {
 	s.slice = append(s.slice, el)
+}
+
+func (s *Stack[T]) SafePush(el T) {
+	s.mtx.Lock()
+	s.slice = append(s.slice, el)
+	s.mtx.Unlock()
 }
 
 func (s *Stack[T]) deleteLast() {
@@ -30,7 +40,7 @@ func (s *Stack[T]) Pop() (T, error) {
 		return s.slice[len(s.slice)-1:][0], nil
 	} else {
 		var zeroVal T
-		return zeroVal, errors.New("Stack is empty")
+		return zeroVal, errors.New("stack is empty")
 	}
 }
 
