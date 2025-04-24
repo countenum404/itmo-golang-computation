@@ -1,5 +1,9 @@
 package core
 
+import (
+	"sync"
+)
+
 /*
 Solver is a stack based command pipeline
 */
@@ -27,5 +31,33 @@ func (bs *BasicSolver) Solve() *Stack[*Result] {
 			panic(err)
 		}
 	}
+	return result
+}
+
+type AsyncSolver struct {
+	Variables *sync.Map
+	Commands  *Stack[Command]
+	printChan chan *Result
+	calcChan  chan *Result
+}
+
+func NewAsyncSolver(commands *Stack[Command]) *AsyncSolver {
+	return &AsyncSolver{Commands: commands, Variables: new(sync.Map)}
+}
+
+func (as *AsyncSolver) Solve() *Stack[*Result] {
+	result := NewStack[*Result]()
+	var wg sync.WaitGroup
+	wg.Add(as.Commands.Size())
+	for c, err := as.Commands.Pop(); err == nil; c, err = as.Commands.Pop() {
+		go func(cmd Command) {
+			defer wg.Done()
+			r, _ := cmd.AsyncExecute(as.Variables)
+			if r != nil {
+				result.SafePush(r)
+			}
+		}(c)
+	}
+	wg.Wait()
 	return result
 }
