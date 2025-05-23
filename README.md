@@ -20,7 +20,11 @@ This repository contains an example application written in Go that demonstrates 
 **Prerequisites**  
 Before getting started, ensure you have the following installed:
 
-Go: Version 1.23+ Docker: For containerization and local development Protobuf compiler: To generate .pb.go files Swag: For generating Swagger documentation
+Go: Version 1.23+  
+Docker: For containerization and local development  
+Protobuf compiler: To generate .pb.go files  
+Swag: For generating Swagger documentation
+
 ## Installation
 
 Clone this repository:
