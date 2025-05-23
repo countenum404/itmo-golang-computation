@@ -28,6 +28,7 @@ Command pattern allows easily to add new commands
 type Command interface {
 	Execute(vars map[string]string) (*Result, error)
 	AsyncExecute(vars *sync.Map) (*Result, error)
+	Equals(command Command) bool
 }
 
 // CalcCommand Operation with Left and Right operands/*
@@ -36,6 +37,13 @@ type CalcCommand struct {
 	Var   string
 	Left  string
 	Right string
+}
+
+func (oc *CalcCommand) Equals(command Command) bool {
+	if other, ok := command.(*CalcCommand); ok {
+		return oc.Op == other.Op && oc.Var == other.Var && oc.Left == other.Left && oc.Right == other.Right
+	}
+	return false
 }
 
 func readWithRetry(key string, vars *sync.Map, valueChan chan string) {
@@ -101,6 +109,13 @@ func (oc *CalcCommand) Execute(vars map[string]string) (*Result, error) {
 // PrintCommand /*
 type PrintCommand struct {
 	Var string
+}
+
+func (pc *PrintCommand) Equals(command Command) bool {
+	if other, ok := command.(*PrintCommand); ok {
+		return pc.Var == other.Var
+	}
+	return false
 }
 
 func (pc *PrintCommand) AsyncExecute(vars *sync.Map) (*Result, error) {

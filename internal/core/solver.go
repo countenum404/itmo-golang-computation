@@ -13,11 +13,11 @@ type Solver interface {
 
 type BasicSolver struct {
 	Variables map[string]string
-	Commands  Stack[Command]
+	Commands  *Stack[Command]
 }
 
 func NewBasicSolver(commands *Stack[Command]) *BasicSolver {
-	return &BasicSolver{Commands: *commands, Variables: make(map[string]string)}
+	return &BasicSolver{Commands: commands, Variables: make(map[string]string)}
 }
 
 func (bs *BasicSolver) Solve() *Stack[*Result] {
