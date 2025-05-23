@@ -35,10 +35,3 @@ jobs:
         if: ${{ success() }}
         run: |
           make lint
-
-      - name: Upload Test Reports
-        if: ${{ always() }}
-        uses: actions/upload-artifact@latest
-        with:
-          name: test-reports
-          path: ./test-reports/*
